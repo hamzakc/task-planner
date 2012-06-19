@@ -1,0 +1,169 @@
+<%
+  times = {}
+  (5..22).each do |i|
+    times[i.to_s] = "#{i}:00"
+    times['selected'] = i if @day.start_hour
+  end
+ %>
+
+<!doctype html>
+<html lang='en'>
+  <head>
+    <title>Task Planner</title>
+    <script src="/js/jquery-1.7.2.min.js"></script>
+    <script src="/js/jquery.jeditable.min.js"></script> 
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/bootstrap-responsive.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+
+    <meta name="viewport" content="width=768">
+        <script src="/js/bootstrap.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('.add-on').click(function() {
+          $(this).toggleClass('worked');
+          // Update the total
+          $.post("/save", { id: $(this).attr('id'), mark: $(this).hasClass('worked'), day: <%=@day.date_key%> } );
+
+          set_number_of_hours();
+        });
+        $('.edit').editable('/save', {
+          indicator : 'Saving...',
+          tooltip   : 'Click to add task...',
+          placeholder : 'Click to add task ...',
+          submitdata  : { day: <%=@day.date_key%>}
+        });
+      $('.edit_time').editable('/save', {
+          indicator : 'Saving...',
+          tooltip   : '',
+          placeholder: '',
+          submitdata  : { day: <%=@day.date_key%> , hour: true}
+        });
+
+        $('.editable').editable('/save', { 
+          data    : <%=JSON.generate(times)%>,
+          type    : 'select',
+          submit  : 'OK',
+          submitdata  : { day: <%=@day.date_key%> , start_hour: true},
+          callback    : onit
+        });
+         
+         $('.edit_notes').editable('/save', {
+          indicator   : 'Saving...',
+          tooltip     : 'Click to add notes...',
+          placeholder : 'Click to add notes ...',
+          submitdata  : { day: <%=@day.date_key%> , notes: true},
+          type        : 'textarea',
+          submit      : 'OK',
+          rows        : '10'
+
+        });
+ 
+
+
+        /*
+        var onit = $('#start_time').change(function () {
+          start_value = parseInt($(this).attr('value'));
+          $('.hour p.help-block').each(function(index) {
+            $(this).html( (start_value + (index +1)) + ":00")
+            });
+          });
+          */
+  set_number_of_hours();
+
+});
+
+ function onit() {
+   var start_time = $('#start_time');
+    start_value = parseInt($("#start_time").html());
+          $('.hour p').each(function(index) {
+            if (index > 0) {
+              $(this).html( (start_value + (index)));
+              } 
+            });
+        }
+        
+        function set_number_of_hours() {
+          $('#total_hours span').html( ($('.worked').length * 15) / 60 );
+        }
+
+    </script>
+  </head>
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#">Task Planner</a>
+            </div>
+          </div>
+    </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2">
+        
+        <h3 id="sheet_date"><%=@date.strftime("%d %B %Y")%></h3>
+        <form>
+          <span id="start_time" class="editable"><%=@day.start_hour%></span>
+
+              <%(0..14).each do |i| %>
+                <div class="hour">
+                  <p><%="#{@day.start_hour.to_i + i}" if i!=0%></p>
+                  <div class="input-prepend"><span id="<%="#{i}_fifteen"%>" class="add-on <%='worked' if @day.get_hour i , :fifteen%>"></span><span class="edit_time span10" id='<%="#{i}_fifteen"%>' size="16" type="text"><%=@day.get_hour_text(i, :fifteen) %></span></div>
+                  <div class="input-prepend"><span id="<%="#{i}_thirty"%>" class="add-on <%='worked' if @day.get_hour i , :thirty%>"></span><span class="edit_time span10" id='<%="#{i}_thirty"%>' size="16" type="text">  <%=@day.get_hour_text(i, :thirty) %>   </span></div>
+                  <div class="input-prepend"><span id="<%="#{i}_fortyfive"%>"   class="add-on <%='worked' if @day.get_hour i , :fortyfive%>"></span><span class="edit_time span10" id='<%="#{i}_fortyfive"%>' size="16" type="text">  <%=@day.get_hour_text(i, :fortyfive) %>  </span></div>
+                  <div class="input-prepend"><span id="<%="#{i}_sixty"%>"   class="add-on <%='worked' if @day.get_hour i , :sixty%>"></span><span class="edit_time span10" id='<%="#{i}_sixty"%>' size="16" type="text">  <%=@day.get_hour_text(i, :sixty) %> </span></div>
+                </div>
+              <%end%>
+        </form>
+
+      </div>
+      <div class="span10">
+
+        <div class="page-header">
+            <h4>Three Major Tasks for Today</h4>
+          </div>
+        <form action="#" class="form-horizontal"> 
+          
+          <div class="control-group">
+            <%(1..3).each do |i|%>
+              <label class="control-label">0<%="#{i}"%></label>
+              <div class="controls">
+                <p class="span7 edit" id='<%="task_#{i}"%>'> <%=@day.tasks[i]%></p>
+              </div>
+            <%end%>
+          </div>
+          <h5> More then three tasks?</h5>
+          <div class="control-group">
+            <%(4..6).each do |i|%>
+              <label class="control-label">0<%="#{i}"%></label>
+              <div class="controls">
+                <p class="span7 edit" id='<%="task_#{i}"%>'> <%=@day.tasks[i]%>  </p>
+                </p>
+              </div>
+            <%end%>
+          </div>
+          <h5>More then six tasks?</h5>
+          <div class="control-group">
+            <%(7..9).each do |i|%>
+              <label class="control-label">0<%="#{i}"%></label>
+              <div class="controls">
+                <p class="span7 edit" id='<%="task_#{i}"%>'> <%=@day.tasks[i]%></p>
+              </div>
+            <%end%>
+          </div>
+        </form>
+
+        <div>
+          <p id="total_hours"><span>0</span> Hour(s) worked today</p>
+        </div>
+ <div class="page-header">
+      <h4>What else is going on today?</h4>
+        <span class = "edit_notes" style = "width:400px;" ><%=@day.notes.strip%></span>
+      </div>
+      </div>
+    </div>
+  </div> 
+  </body>
+</html>

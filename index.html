@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <title>Task Planner</title>
+    <script src="js/jquery-1.7.2.min.js"></script>
+
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/bootstrap-responsive.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+
+    <meta name="viewport" content="width=768">
+        <script src="js/bootstrap.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $('.add-on').click(function() {
+          $(this).toggleClass('worked');
+          // Update the total
+          
+          $('#total_hours span').html( ($('.worked').length * 15) / 60 );
+        });
+
+        $('#start_time').change(function () {
+          start_value = parseInt($(this).attr('value'));
+          $('.hour p.help-block').each(function(index) {
+            //alert(index + ': ' + $(this).text());
+            $(this).html( (start_value + (index +1)) + ":00")
+            });
+          });
+
+          
+  // Array of month Names
+  var monthNames = new Array(
+  "January","February","March","April","May","June","July",
+  "August","September","October","November","December");
+  var now = new Date();
+  var date_string = now.getDate() +" "+monthNames[now.getMonth()] + " " + now.getFullYear(); 
+  $('#sheet_date').html(date_string);
+      });
+    </script>
+
+
+  </head>
+  <body>
+
+    <div class="navbar">
+      <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#">Task Planner</a>
+            </div>
+          </div>
+    </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span2">
+        
+        <h3 id="sheet_date"></h3>
+
+        <form>
+          <div class="hour">
+              <select class="span10" id="start_time">
+                <option value="5">5:00</option>
+                <option value="6">6:00</option>
+                <option value="7">7:00</option>
+                <option value="8">8:00</option>
+                <option value="9">9:00</option>
+                <option value="10">10:00</option>
+                <option value="11">11:00</option>
+                <option value="12">12:00</option>
+                <option value="13">13:00</option>
+                <option value="14">14:00</option>
+                <option value="15">15:00</option>
+                <option value="16">16:00</option>
+                <option value="17">17:00</option>
+                <option value="18">18:00</option>
+                <option value="19">19:00</option>
+                <option value="20">20:00</option>
+                <option value="21">21:00</option>
+                <option value="22">22:00</option>
+              </select>  
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+           <div class="hour">
+            <p class="help-block">9:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+           <div class="hour">
+            <p class="help-block">10:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+          <div class="hour">
+            <p class="help-block">11:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+           <div class="hour">
+            <p class="help-block">12:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+           <div class="hour">
+            <p class="help-block">13:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+           <div class="hour">
+            <p class="help-block">14:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+           <div class="hour">
+            <p class="help-block">15:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+           <div class="hour">
+            <p class="help-block">16:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+           <div class="hour">
+            <p class="help-block">17:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+      
+           <div class="hour">
+            <p class="help-block">18:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+           <div class="hour">
+            <p class="help-block">19:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+
+               <div class="hour">
+            <p class="help-block">20:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+  
+                <div class="hour">
+            <p class="help-block">21:00</p>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+            <div class="input-prepend"><span class="add-on"></span><input class="span10" id="prependedInput" size="16" type="text"></div>
+          </div>
+          
+        </form>
+
+
+
+      </div>
+      <div class="span10">
+
+        <div class="page-header">
+            <h4>Three Major Tasks for Today</h4>
+        </div>
+        <form action="#" class="form-horizontal"> 
+          <div class="control-group">
+            <label class="control-label">01</label>
+            <div class="controls">
+              <p><input class="span7" type="text"/></p>
+            </div>
+            
+            <label class="control-label"> 02</label>
+            <div class="controls">
+              <p> <input class="span7" type="text"/></p>
+            </div>
+            <label class="control-label"> 03</label>
+            <div class="controls">
+              <p> <input class="span7" type="text"/></p>
+            </div>
+
+          </div>
+          <h5> More then three tasks?</h5>
+
+          <div class="control-group">
+            <label class="control-label">04</label>
+            <div class="controls">
+              <p><input class="span7" type="text"/></p>
+            </div>
+            
+            <label class="control-label"> 05</label>
+            <div class="controls">
+              <p> <input class="span7" type="text"/></p>
+            </div>
+            <label class="control-label"> 06</label>
+            <div class="controls">
+              <p> <input class="span7" type="text"/></p>
+            </div>
+
+            <h5>More then six tasks?</h5>
+<div class="control-group">
+            <label class="control-label">07</label>
+            <div class="controls">
+              <p><input class="span7" type="text"/></p>
+            </div>
+            
+            <label class="control-label"> 08</label>
+            <div class="controls">
+              <p> <input class="span7" type="text"/></p>
+            </div>
+            <label class="control-label"> 09</label>
+            <div class="controls">
+              <p> <input class="span7" type="text"/></p>
+            </div>
+
+        </form>
+
+        <div>
+          <p id="total_hours"><span>0</span> Hour(s) worked today</p>
+        </div>
+
+
+
+ <div class="page-header">
+        <h4>What else is going on today?</h4>
+      </div>
+
+
+      </div>
+    </div>
+  </div> 
+
+  </body>
+</html>
+

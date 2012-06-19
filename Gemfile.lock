@@ -3,6 +3,7 @@ GEM
   specs:
     innate (2011.12)
       rack (~> 1.4.0)
+    json (1.6.5)
     kyotocabinet-ruby (1.27.1)
     rack (1.4.1)
 
@@ -11,4 +12,5 @@ PLATFORMS
 
 DEPENDENCIES
   innate
+  json
   kyotocabinet-ruby

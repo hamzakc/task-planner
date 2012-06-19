@@ -1,0 +1,12 @@
+.input-prepend .worked {
+  background-color: red;
+}
+
+form .control-group .controls p {
+  float: none;
+}
+
+.edit_time {
+  float:right !important;
+  border-bottom: 1px solid #cfcfcf;
+}
