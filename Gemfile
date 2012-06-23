@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-gem "innate"
+gem "sinatra", :require => "sinatra/base"
 gem "kyotocabinet-ruby"
 gem "json"
 

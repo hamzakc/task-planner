@@ -1,6 +1,6 @@
 require "rubygems"
 require "bundler/setup"
-require "innate"
+require 'sinatra/base'
 require "erb"
 require "yaml"
 require 'kyotocabinet'
@@ -132,14 +132,18 @@ class Hour
 
 end
 
-# Innate method
+# Sinatra methods
 
-class TaskPlanner
-  Innate.node '/'
-  @logger = Logger.new($stdout)
-  provide :html, :engine => :ERB
-  layout('default') {|name , wish| wish = 'html'}
-  
+class TaskPlanner < Sinatra::Base
+  set :sessions, true 
+  set :static, true
+  set :root, File.dirname(__FILE__)
+  set :public, 'public'
+
+  configure :production, :development do
+    enable :logging
+  end
+
   #Database
   @@db = DB::new
 
@@ -148,43 +152,44 @@ class TaskPlanner
     STDERR.printf("open error: %s\n", @@db.error)
   end
 
-  def index
+  get '/' do
+    erb :index
   end
   
-  def save
+  post '/save' do
     #Lookup object
-    @day =  @@db.get request[:day]
+    @day =  @@db.get params[:day]
     @day = YAML::load(@day) if @day
-    values = request[:id].split("_")
+    values = params[:id].split("_")
    
-    if request[:hour]
-      @day.set_hour_text values.first, values.last, request[:value]
-    elsif request[:mark]
-      val = request[:mark]
+    if params[:hour]
+      @day.set_hour_text values.first, values.last, params[:value]
+    elsif params[:mark]
+      val = params[:mark]
       val = true if val == 'true'
       val = false if val == 'false'
       @day.mark_hour values.first, values.last, val
-    elsif request[:start_hour]
-      @day.start_hour = request[:value]
-    elsif request[:notes]
-      ary = request[:value].split("\n")
+    elsif params[:start_hour]
+      @day.start_hour = params[:value]
+    elsif params[:notes]
+      ary = params[:value].split("\n")
       notes = ''
       ary.each do |s|
         notes << "<p>#{s}</p>"
       end
       @day.notes = notes
     else
-      @day.set_task(values.last , request[:value])
+      @day.set_task(values.last , params[:value])
     end
     @@db.set( @day.date_key, @day.to_yaml)
-    request[:value]
+    params[:value]
   end
 
-  def plan(day, month=nil, year=nil)
-    if day == 'today'
+  get '/plan/:day/:month/:year' do
+    if params[:day] == 'today'
       @date = Time.now
-    elsif !day.nil? && !month.nil? && !year.nil?
-      @date = Date.parse("#{month}/#{day}/#{year}")
+    elsif !params[:day].nil? && !params[:month].nil? && !params[:year].nil?
+      @date = Date.parse("#{params[:month]}/#{params[:day]}/#{params[:year]}")
     end
 
     #Find in the db first
@@ -196,27 +201,22 @@ class TaskPlanner
       @day = Day.new @date , 9
       @@db.set(date_key(@date), @day.to_yaml)
     end
+    erb :plan
   end
   
-  def export(month, year)
+  get '/export/:month/:year' do
     @records = []
     (01..31).each do |day|
 
-      key = "#{day}#{month}#{year}"
+      key = "#{day}#{params[:month]}#{params[:year]}"
       value = @@db.get(key)
       @records << YAML::load(value) if value
     end
-
+    erb :export
   end
   
   private
-
   def date_key(date)
     date.strftime("%d%m%Y")
   end
-
-  
 end
-
-# Start web framework
-Innate.start
