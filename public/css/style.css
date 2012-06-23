@@ -10,3 +10,12 @@ form .control-group .controls p {
   float:right !important;
   border-bottom: 1px solid #cfcfcf;
 }
+
+
+#table_container {
+  margin-top:20px
+}
+
+.container {
+  margin-top:10px;
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <title>Task Planner</title>
+    <script src="/js/jquery-1.7.2.min.js"></script>
+    <script src="/js/jquery.jeditable.min.js"></script> 
+    <link rel="stylesheet" href="/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/bootstrap-responsive.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+
+    <meta name="viewport" content="width=768">
+    <script src="/js/bootstrap.min.js"></script>
+  </head>
+  
+  <body>
+    <div class="container">
+      <div class="row" >
+        <div class="span3">
+          <img src ="/img/logo.gif" alt="logo"/>
+        </div>
+        <div class="span9 page-header">
+          <h2>
+            Time Sheet  February 2012
+            <small>Hamza Khan-Cheema</small>
+          </h2>
+        </div>
+      </div> 
+
+      <div id="table_container">
+      <div class="row">
+        <div class="span2"><h3>Date</h3></div>
+        <div class="span2"><h3>Hours</h3></div>
+        <div class="span8"><h3>Description</h3></div>
+      </div>
+
+      <%@records.each do |record|%>
+        <div class="row">
+          <div class="span2">
+            <p> <%=record.date.strftime("%d/%m/%Y")%> </p>
+          </div>
+          <div class="span2">
+            <p>
+              <%=record.hours_worked%>
+            </p>
+          </div>
+          <div class="span8">
+            <p><%=record.description%></p>
+          </div>
+        </div>
+
+      
+      
+      <%end%>
+
+    </div>
+    </div>
+  </body>
+
+
+
+

@@ -9,7 +9,7 @@ include KyotoCabinet
 
 class Day
   NUMBER_OF_HOURS = 14 
-  attr_accessor :date , :start_hour , :hours, :tasks, :notes
+  attr_accessor :date , :start_hour , :hours, :tasks, :notes, :hours_worked
   
   def initialize(date, start_hour)
     self.date = date
@@ -17,6 +17,20 @@ class Day
     self.hours = set_hours
     self.tasks = []
     self.notes = ""
+  end
+
+  def hours_worked
+    total = 0
+    hours.each do |hour|
+      ['fifteen' , 'thirty' , 'fortyfive' , 'sixty'].each do |min|
+        total = total +1 if hour.send(min)
+      end
+    end
+    (total * 15) / 60
+  end
+
+  def description
+    tasks.join(" / ")
   end
 
   def set_hour_text(hour_index, minute_block, value)
@@ -181,6 +195,16 @@ class TaskPlanner
       #Store it
       @day = Day.new @date , 9
       @@db.set(date_key(@date), @day.to_yaml)
+    end
+  end
+  
+  def export(month, year)
+    @records = []
+    (01..31).each do |day|
+
+      key = "#{day}#{month}#{year}"
+      value = @@db.get(key)
+      @records << YAML::load(value) if value
     end
 
   end
