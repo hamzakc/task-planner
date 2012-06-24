@@ -203,7 +203,18 @@ class TaskPlanner < Sinatra::Base
     end
     erb :plan
   end
-  
+ 
+  get '/today' do
+    time =Time.now
+    redirect to "/plan/#{time.day}/#{time.month}/#{time.year}"
+  end
+
+  get '/yesterday' do
+    time =Time.now
+    redirect to "/plan/#{(time.day) -1}/#{time.month}/#{time.year}"
+  end
+
+
   get '/export/:month/:year' do
     @records = []
     (01..31).each do |day|
