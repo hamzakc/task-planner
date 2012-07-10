@@ -91,19 +91,28 @@
     </script>
   </head>
   <body>
-
+<!--
     <div class="navbar">
       <div class="navbar-inner">
             <div class="container">
               <a class="brand" href="#">Task Planner</a>
             </div>
           </div>
+        </div>
+  -->
+  <div id="head">
+  <div class="row">
+    <div class="span12">
+      <h1 class="core">Task Planner</h1>
     </div>
+  </div>
+</div>
+
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span2">
         
-        <h3 id="sheet_date"><%=@date.strftime("%d %B %Y")%></h3>
+        <h3 id="sheet_date" class="highlight"><%=@date.strftime("%d %B %Y")%></h3>
         <form>
           <span id="start_time" class="editable"><%=@day.start_hour%></span>
 
@@ -119,7 +128,7 @@
         </form>
 
       </div>
-      <div class="span10">
+      <div id="tasks" class="span10">
 
         <div class="page-header">
             <h4>Three Major Tasks for Today</h4>

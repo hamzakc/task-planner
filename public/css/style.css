@@ -1,5 +1,9 @@
+body {
+    /*background-color:rgb(220,227,234);*/
+}
+
 .input-prepend .worked {
-  background-color: red;
+  background-color: #b50708;
 }
 
 form .control-group .controls p {
@@ -18,4 +22,28 @@ form .control-group .controls p {
 
 .container {
   margin-top:10px;
+}
+
+#tasks {
+    background-color: white; 
+    margin-top: 20px; 
+    border-radius: 8px; 
+    padding-left: 21px;
+}
+
+.highlight {
+  color:#b50708;
+}
+
+.core {
+  color: #3f3c5f;
+}
+
+#head {
+  margin-left:15px;
+  margin-top:12px;
+}
+
+.low {
+  color:#1f1e30;
 }
