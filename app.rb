@@ -152,6 +152,10 @@ class TaskPlanner < Sinatra::Base
     STDERR.printf("open error: %s\n", @@db.error)
   end
 
+  use Rack::Auth::Basic, "Restricted Area" do |username, password|
+    [username, password] == ['hamza', 'timekeep']
+  end
+
   get '/' do
     erb :index
   end
